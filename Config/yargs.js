@@ -20,6 +20,7 @@ const argv = require("yargs")
                 .command("crear", "Crea una tarea por hacer", opts)
                 .command("actualizar", "Actualiza el esta de una tarea", {...opts, ...opts2})
                 .command("listar", "Lista todas las tareas")
+                .command("borrar", "Borra una tarea por su descrición", opts)
                 .help()
                 .argv;
 

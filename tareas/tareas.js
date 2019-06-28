@@ -58,25 +58,38 @@ const listar = () => {
     console.log(colors.green("fin"));
 }
 
-const actualizar = (porHacer) =>{
-    if(!porHacer){
+const actualizar = (descripcion, completado) =>{
+    if(!descripcion){
         throw new Error("La tarea no existe")
     }
 
     cargarDB();
 
-    let tarea = listadoTareas.find(x => x.descripcion.toUpperCase() === porHacer.descripcion.toUpperCase())
+    let index = listadoTareas.findIndex(x => x.descripcion.toUpperCase() === descripcion.toUpperCase())
 
-    if(!tarea){
-        throw new Error("La tarea no existe")
+    if(index < 0){
+        throw new Error("La tarea para actualizar no existe")
     }
 
-    listadoTareas.push(porHacer);
-    guardarDB();    
+    //listadoTareas.push(porHacer);
+
+    listadoTareas[index].completado = completado;
+    guardarDB();
+}
+
+const borrar = (descripcion) => {
+    if(!descripcion){
+        throw Error("La descripcion es requerida");
+    }
+    cargarDB();
+    listadoTareas = listadoTareas.filter(x => x.descripcion.toUpperCase() !== descripcion.toUpperCase())
+
+    guardarDB();
 }
 
 module.exports = {
     tarea,
     listar,
-    actualizar
+    actualizar,
+    borrar
 }
